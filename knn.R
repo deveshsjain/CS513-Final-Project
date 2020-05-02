@@ -2,7 +2,7 @@
 rm(list = ls())
 
 #load csv
-data_var<-read.csv('YOUR_PATH_TO_CSV')
+data_var<-read.csv('PATH_TO_CSV')
 
 #Replace NA values with 0000
 data_var$TERMINATION_YEAR[is.na(data_var$TERMINATION_YEAR)]<-0000
@@ -33,6 +33,7 @@ library(class)
 #k=3
 knn3<- knn(training_data, test_data,training_data$STATUS,k=3)
 
+# Making the Confusion Matrix 
 tabk3 <- table(knn3, test_data$STATUS)
 tabk3
 
@@ -41,6 +42,7 @@ accuracy(tabk3)
 #k=5
 knn5<- knn(training_data, test_data,training_data$STATUS,k=5)
 
+# Making the Confusion Matrix 
 tab5 <- table(knn5, test_data$STATUS)
 tab5
 
@@ -49,6 +51,7 @@ accuracy(tab5)
 #k=10
 knn10<- knn(training_data, test_data,training_data$STATUS,k=10)
 
+# Making the Confusion Matrix 
 tab10 <- table(knn10, test_data$STATUS)
 tab10
 
