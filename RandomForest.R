@@ -1,3 +1,4 @@
+#Using package ANN2
 #cleaning environment
 rm(list = ls())
 
@@ -7,26 +8,70 @@ data_var<-read.csv('PATH_TO_CSV')
 #Replace NA values with 0000
 data_var$TERMINATION_YEAR[is.na(data_var$TERMINATION_YEAR)]<-0000
 
-#Omiting Employee ID and columns with MeanGini less than 5.0
-df1<-data_var[-c(1,6,13,15,16,18,19)]
+#converting all columns to integer type
+data_var[] <- lapply(data_var, function(x) as.numeric(x))
 
-#Convert JOB_GROUP to numeric as randomForest cannot handle categorical predictors with more than 53 categories.
-df1$JOB_GROUP<-as.numeric(df1$JOB_GROUP)
+#Dropping column id and mean gini less than 5.0
+#data_var1<-data_var[-1]
+data_var1<-data_var[-c(1,6,13,15,16,18,19)]
 
 #splitting data into test and training
-sample_data<-sample(nrow(df1),0.70*nrow(df1))
-training_data<-df1[sample_data,]
-test_data<-df1[-sample_data,]
+random_draw <- sample(1:nrow(data_var1), 0.70*nrow(data_var1))
+X_train <- data_var1[random_draw, -14]
+y_train <- data_var1[random_draw, 14]
+X_test <- data_var1[setdiff(1:nrow(data_var1), random_draw), -14]
+y_test<- data_var1[setdiff(1:nrow(data_var1), random_draw), 14]
 
-#Creating fit model with target variable against the rest
-library(randomForest)
-rffit <- randomForest(STATUS ~., data=training_data, ntree=30, keep.forest=TRUE, importance=TRUE)
+#install.packages('ANN2')
+library(ANN2)
 
-#plotting fit to check optimal number of trees for best accuracy
-plot(rffit, main = "Fit Plot")
+# Train neural network on classification task
+NN <- neuralnetwork(X = X_train, y=y_train ,hidden.layers = 5)#,optim.type ='adam', learn.rates = 0.01, val.prop = 0)
 
-#Predict test data results
-pred<-predict(rffit,test_data)
+# Plot the loss during training
+plot(NN)
 
-# Making the Confusion Matrix 
-table(test_data$STATUS, pred)
+# Make predictions
+y_pred <- predict(NN, newdata = X_test)
+
+# Confusion Matrix
+table(y_test,y_pred$predictions)
+
+# #ANN
+# 
+# #cleaning environment
+# rm(list = ls())
+# 
+# #load csv
+# data_var<-read.csv('C:/Users/deves/Desktop/Class/CS 513 KDD/Final Project/attrition_data.csv')
+# 
+# #Replace NA values with 0000
+# data_var$TERMINATION_YEAR[is.na(data_var$TERMINATION_YEAR)]<-0000
+# 
+# #converting all columns to integer type
+# data_var[] <- lapply(data_var, function(x) as.numeric(x))
+# 
+# #Dropping column id
+# data_var1<-data_var[-c(1,6,13,15,16,18,19)]
+# 
+# #splitting data into test and training
+# sample_data<-sample(nrow(data_var1),0.70*nrow(data_var1))
+# training_data<-data_var1[sample_data,]
+# test_data<-data_var1[-sample_data,]
+# 
+# #install.packages('neuralnet')
+# library(neuralnet)
+# 
+# nn<-neuralnet(STATUS~., training_data, hidden = 5, threshold = 0.01 )
+# #plot(nn)
+# 
+# pred <- predict(nn, test_data)
+# #print(nn)
+# 
+# #Confusion matrix
+# nn.results <- compute(nn, test_data)
+# results <- data.frame(actual = test_data$STATUS, prediction = nn.results$net.result)
+# roundedresults<-sapply(results,round,digits=0)
+# roundedresultsdf=data.frame(roundedresults)
+# attach(roundedresultsdf)
+# table(actual,prediction)
