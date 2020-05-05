@@ -34,46 +34,44 @@ plot(NN)
 # Make predictions
 y_pred <- predict(NN, newdata = X_test)
 
-# Plot predictions
-correct <- (y_test == y_pred$predictions)
-#correct
-#plot(X_test, pch = as.numeric(y_test), col = correct + 2)
+# Confusion Matrix
+table(y_test,y_pred$predictions)
 
-#ANN
-
-#cleaning environment
-rm(list = ls())
-
-#load csv
-data_var<-read.csv('PATH_TO_CSV')
-
-#Replace NA values with 0000
-data_var$TERMINATION_YEAR[is.na(data_var$TERMINATION_YEAR)]<-0000
-
-#converting all columns to integer type
-data_var[] <- lapply(data_var, function(x) as.numeric(x))
-
-#Dropping column id
-data_var1<-data_var[-c(1,6,13,15,16,18,19)]
-
-#splitting data into test and training
-sample_data<-sample(nrow(data_var1),0.70*nrow(data_var1))
-training_data<-data_var1[sample_data,]
-test_data<-data_var1[-sample_data,]
-
-#install.packages('neuralnet')
-library(neuralnet)
-
-nn<-neuralnet(STATUS~., training_data, hidden = 5, threshold = 0.01 )
-#plot(nn)
-
-pred <- predict(nn, test_data)
-#print(nn)
-
-#Confusion matrix
-nn.results <- compute(nn, test_data)
-results <- data.frame(actual = test_data$STATUS, prediction = nn.results$net.result)
-roundedresults<-sapply(results,round,digits=0)
-roundedresultsdf=data.frame(roundedresults)
-attach(roundedresultsdf)
-table(actual,prediction)
+# #ANN
+# 
+# #cleaning environment
+# rm(list = ls())
+# 
+# #load csv
+# data_var<-read.csv('C:/Users/deves/Desktop/Class/CS 513 KDD/Final Project/attrition_data.csv')
+# 
+# #Replace NA values with 0000
+# data_var$TERMINATION_YEAR[is.na(data_var$TERMINATION_YEAR)]<-0000
+# 
+# #converting all columns to integer type
+# data_var[] <- lapply(data_var, function(x) as.numeric(x))
+# 
+# #Dropping column id
+# data_var1<-data_var[-c(1,6,13,15,16,18,19)]
+# 
+# #splitting data into test and training
+# sample_data<-sample(nrow(data_var1),0.70*nrow(data_var1))
+# training_data<-data_var1[sample_data,]
+# test_data<-data_var1[-sample_data,]
+# 
+# #install.packages('neuralnet')
+# library(neuralnet)
+# 
+# nn<-neuralnet(STATUS~., training_data, hidden = 5, threshold = 0.01 )
+# #plot(nn)
+# 
+# pred <- predict(nn, test_data)
+# #print(nn)
+# 
+# #Confusion matrix
+# nn.results <- compute(nn, test_data)
+# results <- data.frame(actual = test_data$STATUS, prediction = nn.results$net.result)
+# roundedresults<-sapply(results,round,digits=0)
+# roundedresultsdf=data.frame(roundedresults)
+# attach(roundedresultsdf)
+# table(actual,prediction)
