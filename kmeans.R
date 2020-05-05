@@ -11,6 +11,6 @@ attrition[] <- lapply(attrition, function(x) as.factor(x))
 df1<-attrition[-c(1,6,13,15,16,18,19)]
 
 # calculating kmeans
-kmeans_3<- kmeans(df1[,20],3,nstart = 10)
+kmeans_3<- kmeans(df1[,14],3,nstart = 10)
 kmeans_3$cluster
-table(kmeans_3$cluster,df1[,20])
+table(kmeans_3$cluster,df1[,14])
