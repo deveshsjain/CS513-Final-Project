@@ -12,12 +12,12 @@ attrition[] <- lapply(attrition, function(x) as.factor(x))
 df1<-attrition[-c(1,6,13,15,16,18,19)]
 
 # calculating distribution
-attrDist<-dist(df1[,20])
+attrDist<-dist(df1[,14])
 
 #calculating and plotting hcluster
 results<-hclust(attrDist)
 plot(results)
 
 hclust_3<-cutree(results,3)
-table(hclust_3, df1[,20])
+table(hclust_3, df1[,14])
 
