@@ -1,7 +1,7 @@
 
 rm(list=ls())
 # load in data
-attrition <- read.csv("C:/Users/agome/Documents/attrition_data.csv")
+attrition <- read.csv('PATH_TO_CSV', header = TRUE)
 # set NA values in termination year to 0
 attrition$TERMINATION_YEAR[is.na(attrition$TERMINATION_YEAR)]<-0000
 #converting all columns to factor type
