@@ -1,9 +1,8 @@
 #C50 Analysis
 
 rm(list=ls())
-# 
-setwd('~/Documents/COLLEGE/cs513/HW2')
-attrition <- read.csv("attrition_data.csv", header = TRUE)
+ 
+attrition <- read.csv('PATH_TO_CSV', header = TRUE)
 attrition[is.na(attrition)] <- 0000
 
 attrition$TERMINATION_YEAR[is.na(attrition$TERMINATION_YEAR)]<-0000
