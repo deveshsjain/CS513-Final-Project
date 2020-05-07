@@ -2,7 +2,7 @@
 rm(list = ls())
 
 #load csv
-data_var<-read.csv('C:/Users/deves/Desktop/Class/CS 513 KDD/Final Project/attrition_data.csv')
+data_var<-read.csv('PATH_TO_CSV')
 
 #Replace NA values with 0000
 data_var$TERMINATION_YEAR[is.na(data_var$TERMINATION_YEAR)]<-0000
