@@ -1,4 +1,4 @@
-#C4.5 Analysis
+#C50 Analysis
 
 rm(list=ls())
 # 
@@ -18,7 +18,7 @@ test<-df1[-split_data,]
 
 
 library('C50')
-# Do C4.5 analysis
+# Do C50 analysis
 C50_class <- C5.0(as.factor(STATUS)~.,data=training )
 
 summary(C50_class )
